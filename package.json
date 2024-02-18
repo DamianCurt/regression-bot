@@ -1,0 +1,14 @@
+{
+  "name": "regression-bot",
+  "version": "1.0.0",
+  "description": "regression-bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Damian Katz",
+  "license": "ISC",
+  "devDependencies": {
+    "selenium-webdriver": "^4.17.0"
+  }
+}
