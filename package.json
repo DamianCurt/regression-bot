@@ -4,11 +4,15 @@
   "description": "regression-bot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-all": "npm run test:all",
+    "test:all": "npm run test-env && npm run test-lang",
+    "test-env": "node testenv.js", 
+    "test-lang": "node testlang.js"
   },
   "author": "Damian Katz",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "selenium-webdriver": "^4.17.0"
   }
 }
