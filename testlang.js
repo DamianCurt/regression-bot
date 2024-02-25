@@ -32,8 +32,8 @@ async function langTest() {
 
     // Create site-map urls list
     if (url === "https://www.mastercard.com.mx/es-mx/sitemap.html") {
-      for (let i = 0; i < driver.findElements(By.css('.site-map .column-wrapper a')).length; i++) {
-        console.log(driver.findElements(By.css('.site-map .column-wrapper a'))[i].innerHTML);
+      for (let i = 0; i < driver.findElements(By.css('.'+'content-par.responsivegrid a')).length; i++) {
+        console.log(driver.findElements(By.css('.'+'content-par.responsivegrid a'))[i].innerHTML);
       }
     }
   }
