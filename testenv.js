@@ -1,44 +1,32 @@
-const { Builder, By, until } = require("selenium-webdriver");
-const assert = require("assert");
-async function test() {
+const {Builder, By, until} = require('selenium-webdriver');
 
-  let driver = await new Builder().forBrowser('chrome').build();
-
-  // Home page lang test 
-  await driver.get('https://www.mastercard.com.mx/es-mx.html');
-  let homePageSource = await driver.getPageSource();
-  let homeLang = homePageSource.match(/html lang="([\w-]+)"/)[1];
-  console.log('Home Page:', homeLang);
-
-  // Sitemap page lang test
-  await driver.get('https://www.mastercard.com.mx/es-mx/sitemap.html');
-  let sitemapPageSource = await driver.getPageSource();
-  let sitemapLang = sitemapPageSource.match(/html lang="([\w-]+)"/)[1];
-  console.log('Sitemap Page:', sitemapLang);
-
-  // Sitemap URLs
-  await driver.get("https://www.mastercard.com.mx/es-mx/sitemap.html");
-
-  // Get page source 
-  const pageSource = await driver.getPageSource();
-
-  // Extract content-par element 
-  const contentPar = pageSource.match(/<div class="content-par responsivegrid">([\s\S]*)<\/div>/)[1];
-
-  // Get all URLs inside it
-  const urlRegex = /<a[^>]*href="([^"]+)"/g;
-  const urls = [];
-  let match;
-  while (match = urlRegex.exec(contentPar)) {
-    urls.push(match[1]);
-  }
-
-  // Print extracted URLs
-  console.log(urls);
-
-
-  await driver.quit();
-
+// Define the function to extract URLs from the div element
+async function extractUrls() {
+    // Create a WebDriver instance
+    let driver = await new Builder().forBrowser('chrome').build();
+    try {
+        // Navigate to the webpage containing the div element
+        await driver.get('https://www.mastercard.com.mx/es-mx/sitemap.html');
+        
+        // Wait for the div element to be present
+        await driver.wait(until.elementLocated(By.className('.site-map .column-wrapper')), 10000);
+        
+        // Find the div element by its class name
+        let divElement = await driver.findElement(By.className('.site-map .column-wrapper'));
+        console.log(divElement)
+        // Find all anchor elements (links) within the div
+        let linkElements = await divElement.findElements(By.css('a'));
+        console.log(linkElements)
+        // Extract and log the URLs from the anchor elements
+        for (let i = 0; i < linkElements.length; i++) {
+            let url = await linkElements[i].getAttribute('href');
+            console.log('URL:', url);
+        }
+    } finally {
+        // Close the WebDriver instance
+        await driver.quit();
+    }
 }
 
-test();
+// Call the function to extract URLs
+extractUrls();
