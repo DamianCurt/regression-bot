@@ -1,26 +1,44 @@
 const { Builder, By, until } = require("selenium-webdriver");
 const assert = require("assert");
-async function loginTest() {
-  // launch the browser
-  let driver = await new Builder().forBrowser("chrome").build();
-  try {
-    //navigate to facebook login page
-    await driver.get("https://test-login-app.vercel.app/");
-    // Select input elements and fill them out
-    await driver.findElement(By.id("email")).sendKeys("test3@gmail.com");
-    await driver.findElement(By.id("password")).sendKeys("Password@12345");
-    // Select login button and invoke click action
-    //If login details are correct we wiil be redirected to the welcome page
-    await driver.findElement(By.name("login")).click();
-    //On succesful login get page title
-    //Check page title, to confirm login was successful
-    const pageTitle = await driver.getTitle();
-    // assert usign node assertion
-    assert.strictEqual(pageTitle, "Welcomepage");
-    //Check if redirect to login page was successfull
-    await driver.wait(until.titleIs("Welcomepage"), 4000);
-  } finally {
-    await driver.quit();
+async function test() {
+
+  let driver = await new Builder().forBrowser('chrome').build();
+
+  // Home page lang test 
+  await driver.get('https://www.mastercard.com.mx/es-mx.html');
+  let homePageSource = await driver.getPageSource();
+  let homeLang = homePageSource.match(/html lang="([\w-]+)"/)[1];
+  console.log('Home Page:', homeLang);
+
+  // Sitemap page lang test
+  await driver.get('https://www.mastercard.com.mx/es-mx/sitemap.html');
+  let sitemapPageSource = await driver.getPageSource();
+  let sitemapLang = sitemapPageSource.match(/html lang="([\w-]+)"/)[1];
+  console.log('Sitemap Page:', sitemapLang);
+
+  // Sitemap URLs
+  await driver.get("https://www.mastercard.com.mx/es-mx/sitemap.html");
+
+  // Get page source 
+  const pageSource = await driver.getPageSource();
+
+  // Extract content-par element 
+  const contentPar = pageSource.match(/<div class="content-par responsivegrid">([\s\S]*)<\/div>/)[1];
+
+  // Get all URLs inside it
+  const urlRegex = /<a[^>]*href="([^"]+)"/g;
+  const urls = [];
+  let match;
+  while (match = urlRegex.exec(contentPar)) {
+    urls.push(match[1]);
   }
+
+  // Print extracted URLs
+  console.log(urls);
+
+
+  await driver.quit();
+
 }
-loginTest();
+
+test();
