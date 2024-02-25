@@ -1,5 +1,4 @@
-// Import the necessary Selenium WebDriver modules
-const {Builder, By, Key, until} = require('selenium-webdriver');
+const {Builder, By, until} = require('selenium-webdriver');
 
 // Define the class name of the div element containing the URLs
 const divClassName = 'content-par.responsivegrid';
@@ -11,7 +10,7 @@ let extractedUrls = [];
 async function extractUrls() {
     // Create a WebDriver instance
     let driver = await new Builder().forBrowser('chrome').build();
-    try {
+    
         // Navigate to the webpage containing the div element
         await driver.get('https://www.mastercard.com.mx/es-mx/sitemap.html');
         
@@ -32,10 +31,10 @@ async function extractUrls() {
                 extractedUrls.push(url);
             }
         }
-    } finally {
+    
         // Close the WebDriver instance
         await driver.quit();
-    }
+    
 }
 
 // Call the function to extract URLs
