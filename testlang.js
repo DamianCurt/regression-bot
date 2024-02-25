@@ -8,6 +8,7 @@ async function langTest() {
     "https://www.mastercard.com.mx/es-mx/sitemap.html",
   ];
 
+  //esta lista no esta usada
   let urlsBodySitemap = [
   ];
 
@@ -29,6 +30,7 @@ async function langTest() {
     // Print output 
     console.log(url, "-", language);
 
+    
     if (url === "https://www.mastercard.com.mx/es-mx/sitemap.html") {
       for (let i = 0; i < driver.findElements(By.css('.site-map .column-wrapper a')).length; i++) {
         console.log(driver.findElements(By.css('.site-map .column-wrapper a'))[i].innerHTML);
