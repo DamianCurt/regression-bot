@@ -4,6 +4,9 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
 // Define the class name of the div element containing the URLs
 const divClassName = 'content-par.responsivegrid';
 
+// Array to store extracted URLs
+let extractedUrls = [];
+
 // Define the function to extract URLs from the div element
 async function extractUrls() {
     // Create a WebDriver instance
@@ -21,11 +24,12 @@ async function extractUrls() {
         // Find all anchor elements (links) within the div
         let linkElements = await divElement.findElements(By.css('a'));
         
-        // Extract and log the URLs from the anchor elements
+        // Extract and store the URLs from the anchor elements
         for (let i = 0; i < linkElements.length; i++) {
             let url = await linkElements[i].getAttribute('href');
             if (url) {
                 console.log('URL:', url);
+                extractedUrls.push(url);
             }
         }
     } finally {
@@ -35,4 +39,8 @@ async function extractUrls() {
 }
 
 // Call the function to extract URLs
-extractUrls();
+extractUrls().then(() => {
+    console.log("All extracted URLs have been printed to the console.");
+}).catch((error) => {
+    console.error("Error:", error);
+});
