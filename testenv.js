@@ -15,13 +15,16 @@ async function extractUrls() {
         await driver.get('https://www.mastercard.com.mx/es-mx/sitemap.html');
         
         // Wait for the div element to be present
-        await driver.wait(until.elementLocated(By.css('.' + divClassName)), 10000);
-        
+        let elementClass = await driver.wait(until.elementLocated(By.css('.' + divClassName)), 30000);
+        console.log(elementClass);
+
         // Find the div element by its class name
         let divElement = await driver.findElement(By.css('.' + divClassName));
+        console.log(divElement);
         
         // Find all anchor elements (links) within the div
         let linkElements = await divElement.findElements(By.css('a'));
+        console.log(linkElements)
         
         // Extract and store the URLs from the anchor elements
         for (let i = 0; i < linkElements.length; i++) {
@@ -40,6 +43,7 @@ async function extractUrls() {
 // Call the function to extract URLs
 extractUrls().then(() => {
     console.log("All extracted URLs have been printed to the console.");
+    console.log("All URLs in the array:", extractedUrls);
 }).catch((error) => {
     console.error("Error:", error);
 });
