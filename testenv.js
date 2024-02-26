@@ -9,21 +9,24 @@ const sitemapPage = 'https://www.mastercard.com.mx/es-mx/sitemap.html';
 let extractedUrls = [];
 
 // Define the function to extract URLs from the div element
-async function regressionLangTestallsite() {
+async function extractUrls() {
     // Create a WebDriver instance
     let driver = await new Builder().forBrowser('chrome').build();
 
     // Navigate to the webpage containing the div element
     await driver.get(sitemapPage);
 
-    // Wait for the div element to be present
-    await driver.wait(until.elementLocated(By.css('.' + divClassName)), 10000);
+    // Wait for the div element to be present. If page is not loaded to get the element increase time number
+    let elementClass = await driver.wait(until.elementLocated(By.css('.' + divClassName)), 500000);
+    console.log(elementClass);
 
     // Find the div element by its class name
     let divElement = await driver.findElement(By.css('.' + divClassName));
+    console.log(divElement);
 
     // Find all anchor elements (links) within the div
     let linkElements = await divElement.findElements(By.css('a'));
+    console.log(linkElements)
 
     // Extract and store the URLs from the anchor elements
     for (let i = 0; i < linkElements.length; i++) {
@@ -34,30 +37,15 @@ async function regressionLangTestallsite() {
         }
     }
 
-    /*// Iterate URLs
-    for (let page of extractedUrls) {
-
-        // Navigate to Page
-        await driver.get(page);
-
-        // Get page source 
-        let pageSource = await driver.getPageSource();
-
-        // Extract lang attribute  
-        let language = pageSource.match(/html lang="([\w-]+)"/)[1];
-
-        // Print output 
-        console.log(page, "-", language);
-    }*/
-
     // Close the WebDriver instance
     await driver.quit();
+
 }
 
 // Call the function to extract URLs
-regressionLangTestallsite().then(() => {
+extractUrls().then(() => {
     console.log("All extracted URLs have been printed to the console.");
-    console.log("All extracted URLs with constant URLs:", extractedUrls);
+    console.log("All URLs in the array:", extractedUrls);
 }).catch((error) => {
     console.error("Error:", error);
 });
