@@ -4,6 +4,7 @@
   "description": "regression-bot",
   "main": "index.js",
   "scripts": {
+    "test:mocha": "mocha test.js --no-timeouts",
     "test": "npm run test:all",
     "test:all": "npm run test-env && npm run test-lang",
     "test-env": "node testenv.js",
@@ -12,6 +13,7 @@
   "author": "Damian Katz",
   "license": "ISC",
   "dependencies": {
+    "mocha": "^10.3.0",
     "selenium-webdriver": "^4.17.0"
   }
 }
