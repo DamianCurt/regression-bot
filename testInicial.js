@@ -1,6 +1,8 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const assert = require('assert');
 
+const Config = require('../utilities/Config');
+
 // describe viene a ser como una suite de test cases
 describe('Sample Test Suite', function() {
     let driver;
@@ -11,17 +13,16 @@ describe('Sample Test Suite', function() {
     });
 
     // todo lo que esta dentro del bloque 'it' es un test case dentro de una suite 
-    it('should open Google', async function() {
-        await driver.get('https://www.google.com');
+    it('Should open MC home page', async function() {
+        await driver.get('https://www.mastercard.com.mx/es-mx.html');
         const title = await driver.getTitle();
-        assert.strictEqual(title, 'Google');
+        assert.strictEqual(title, 'Mastercard - Una empresa tecnológica global en la industria de pagos');
     });
 
-    it('should search for "Selenium"', async function() {
-        await driver.findElement(By.name('q')).sendKeys('Selenium', Key.RETURN);
-        await driver.wait(until.titleContains('Selenium'), 5000);
-        const title = await driver.getTitle();
-        assert.strictEqual(title, 'Selenium - Buscar con Google');
+    it('should search for "BIENVENIDO A MASTERCARD"', async function() {
+        const webElement = await driver.wait(until.elementLocated(By.className('dxp-title-eyebrow')), 10000);
+        const bienvenida = await webElement.getText();
+        assert.strictEqual(bienvenida, 'BIENVENIDO A MASTERCARD');
     });
 
     // esto tambien es lo que se llama hook, este se corre despues de cada it

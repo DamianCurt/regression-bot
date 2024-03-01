@@ -4,7 +4,7 @@
   "description": "regression-bot",
   "main": "index.js",
   "scripts": {
-    "test:mocha": "mocha test.js --no-timeouts",
+    "test:mocha": "mocha tests.js",
     "test": "npm run test:all",
     "test:all": "npm run test-env && npm run test-lang",
     "test-env": "node testenv.js",
