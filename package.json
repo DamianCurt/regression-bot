@@ -6,14 +6,16 @@
   "scripts": {
     "test:mocha": "mocha tests.js",
     "test": "npm run test:all",
-    "test:all": "npm run test-env && npm run test-lang",
-    "test-env": "node testenv.js",
-    "test-lang": "node testlang.js"
+    "test:all": "npm run test-env && npm run test-lang && npm run test-mocha",
+    "test-env": "node test/testenv.js",
+    "test-lang": "node test/testlang.js",
+    "test-mocha": "node test/mocha.js"
   },
   "author": "Damian Katz",
   "license": "ISC",
   "dependencies": {
     "mocha": "^10.3.0",
-    "selenium-webdriver": "^4.17.0"
+    "selenium-webdriver": "^4.18.1"
   }
 }
+
