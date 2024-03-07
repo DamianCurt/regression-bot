@@ -47,6 +47,8 @@ class MC_HomePOM {
                     console.log(`Navegando la pagina ${CountryConfigs[country].urlHomePage}`);
                     console.log(`El lang de la pagina es ${langAttributeValue.toString()}`);
                     console.log(`Obtuve pagina actual ${currentUrlValue.toString()}`);
+                    console.log(`configLang y actualLang son iguales? ${await this.compareLangs(CountryConfigs[country].lang, langAttributeValue.toString())}`);
+                    console.log(`configCountry y actualCountry son iguales? ${await this.compareLangs(CountryConfigs[country].urlHomePage, currentUrlValue.toString())}`);
                 }
              
                 
@@ -62,9 +64,21 @@ class MC_HomePOM {
         }
     }
 
-    async getLangFromURL(){}
+    async compareLangs(configLang, actualLang){
+        if(configLang.toLowerCase() === actualLang.toLowerCase()){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-    async getCountryFromURL(){}
+    async compareCountries(configCountry, actualCountry){
+        if(configCountry.toLowerCase() === actualCountry.toLowerCase()){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
 
