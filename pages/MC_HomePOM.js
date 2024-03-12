@@ -1,7 +1,7 @@
 const { By, until } = require('selenium-webdriver');
 const ChromeDriverUtilities = require('../utilities/ChromeDriverUtilities');
 const Config = require('../utilities/Config');
-const CountryConfigs = require('../utilities/CountryConfigs');
+const CountryConfigs = require('../utilities/CountryConfigs.json');
 
 class MC_HomePOM {
 
@@ -32,53 +32,22 @@ class MC_HomePOM {
     }
 
     async navigateHomePageURLs(){
-        console.log()
-        for(let country in CountryConfigs){
-            try {
-
-                if (CountryConfigs.hasOwnProperty(country)) {
-                    console.log("-------------------------------------------------------------------");
-                    console.log(CountryConfigs[country].urlHomePage);
-                    await this.driver.get(CountryConfigs[country].urlHomePage);
-                    const webElement = await this.driver.wait(until.elementLocated(By.css('html')), 15000);
-                    const langAttributeValue = await webElement.getAttribute('lang');
-                    const currentUrlValue = await this.driver.getCurrentUrl();
-                    console.log("-------------------------------------------------------------------");
-                    console.log(`Navegando la pagina ${CountryConfigs[country].urlHomePage}`);
-                    console.log(`El lang de la pagina es ${langAttributeValue.toString()}`);
-                    console.log(`Obtuve pagina actual ${currentUrlValue.toString()}`);
-                    console.log(`configLang y actualLang son iguales? ${await this.compareLangs(CountryConfigs[country].lang, langAttributeValue.toString())}`);
-                    console.log(`configCountry y actualCountry son iguales? ${await this.compareLangs(CountryConfigs[country].urlHomePage, currentUrlValue.toString())}`);
-                }
-             
-                
-            } catch (e) {
-                console.log(`CAPO, TE DEJO ESTE MENSAJE DE ERROR PA VO! ${e}`);
-            }
+        for(let countryConfig of CountryConfigs){
+            console.log("-------------------------------------------------------------------");
+            console.log(countryConfig.urlHomePage);
+            await this.driver.get(countryConfig.urlHomePage);
+            const webElement = await this.driver.wait(until.elementLocated(By.css('html')), 15000);
+            const langAttributeValue = await webElement.getAttribute('lang');
+            const currentUrlValue = await this.driver.getCurrentUrl();
+            console.log("-------------------------------------------------------------------");
+            console.log(`Navegando la pagina ${countryConfig.urlHomePage}`);
+            console.log(`El lang de la pagina es ${langAttributeValue.toString()}`);
+            console.log(`Obtuve pagina actual ${currentUrlValue.toString()}`);
+            console.log(`configLang y actualLang son iguales? ${countryConfig.lang === langAttributeValue.toString()}`);
+            console.log(`configCountry y actualCountry son iguales? ${countryConfig.urlHomePage === currentUrlValue.toString()}`);
         }
     }
 
-    async navigateSiteMapURLs(){
-        for(let country in CountryConfigs){
-
-        }
-    }
-
-    async compareLangs(configLang, actualLang){
-        if(configLang.toLowerCase() === actualLang.toLowerCase()){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    async compareCountries(configCountry, actualCountry){
-        if(configCountry.toLowerCase() === actualCountry.toLowerCase()){
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 }
 
