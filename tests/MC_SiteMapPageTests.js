@@ -6,7 +6,7 @@ const Config = require('../utilities/Config');
 
 describe('MC Site Map TESTS', function () {
 
-    this.timeout(30000);
+    this.timeout(300000);
     let driver;
     let siteMapPageObjectModel;
 
@@ -16,8 +16,9 @@ describe('MC Site Map TESTS', function () {
     });
 
     it('Navigates to all body the Site Map URLs', async function (){
-        await siteMapPageObjectModel.navigateSiteMapURLs();
-        
+        // commentar uno o el otro dependiendo de lo que quiera testear o los dos si quiero probar todo
+        //await siteMapPageObjectModel.testLangFromSiteMapURLs();
+        await siteMapPageObjectModel.testLangFromAllBodyUrlsFromGivenSiteMap();
     });
 
     after(async function () {
